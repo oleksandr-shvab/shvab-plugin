@@ -1,0 +1,15 @@
+{
+  "name": "shvab-marketplace",
+  "description": "Shvab's personal Claude Code plugins",
+  "owner": {
+    "name": "Shvab Alexandr",
+    "email": "apamic1995@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "shvab",
+      "source": "./",
+      "description": "Personal developer toolkit: skills and agents for use across all projects"
+    }
+  ]
+}
