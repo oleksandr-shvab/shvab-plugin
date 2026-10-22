@@ -1,11 +1,11 @@
 ---
 name: react-testing-library
-description: "General-purpose React Testing Library guide with Vitest. Use when writing, reviewing, or setting up React component and hook tests. Covers project setup from scratch, RTL query priority, userEvent, async patterns, mocking strategies, and common anti-patterns. Applicable to any Vite + React project."
+description: "General-purpose React Testing Library guide with Vitest. Use when writing, reviewing, or setting up React component and hook tests. Covers project setup from scratch, RTL query priority, userEvent, async patterns, mocking strategies, and common anti-patterns. Written for Vitest; applies to any React project (adapt the setup section for non-Vite tooling such as Next.js or Jest)."
 ---
 
 # React Testing Library
 
-General-purpose guide for testing React components and hooks with React Testing Library (RTL) and Vitest. Project-agnostic — works with any Vite + React setup.
+General-purpose guide for testing React components and hooks with React Testing Library (RTL) and Vitest. Project-agnostic — the philosophy, queries, and patterns apply to any React setup; the templates assume Vite + Vitest.
 
 ## Philosophy: Fewer Tests, Real Scenarios
 
@@ -28,6 +28,17 @@ Static Analysis ← Always: TypeScript, ESLint
 
 ---
 
+## Adapt to the Project First
+
+Before writing a test, look at how the project already tests and match it — the templates below are defaults, not rules:
+
+- **Runner and setup** — if tests already run (Vitest, Jest), reuse that config and setup file; follow "Setup from Scratch" only when there is none. Jest differs mostly by name: `jest.fn()`/`jest.mock()` instead of `vi.*`, and `@testing-library/jest-dom` instead of `@testing-library/jest-dom/vitest`. For Next.js or other non-Vite tooling, follow that framework's own Vitest/Jest setup guide for the config — the rest of this skill still applies.
+- **Language and naming** — the templates use `.jsx`; in a TypeScript project use `.test.tsx` and typed props. Follow the project's file placement and naming (colocated vs `__tests__/`, `.test` vs `.spec`).
+- **Router, data layer, providers** — wrap components in what the app really uses (React Router's `MemoryRouter` is shown; use the equivalent for other routers) and mock the network the way the project already does.
+- **Test doubles** — reuse the project's shared mocks, fixtures, and render helpers before writing new ones.
+
+---
+
 ## Setup from Scratch
 
 ### 1. Install Dependencies
@@ -44,7 +55,7 @@ npm install -D @vitest/coverage-v8     # Code coverage
 
 ### 2. Vitest Config
 
-Create `vitest.config.js` at the client root (or extend `vite.config.js`):
+Create `vitest.config.js` at the app/package root (or extend `vite.config.js`):
 
 ```js
 import { defineConfig, mergeConfig } from 'vitest/config';
@@ -273,7 +284,7 @@ import userEvent from '@testing-library/user-event';
 import { renderHook, act } from '@testing-library/react';
 ```
 
-NEVER import from `jest`. Use `vi.fn()`, `vi.spyOn()`, `vi.mock()`.
+In a Vitest project, NEVER import from `jest`. Use `vi.fn()`, `vi.spyOn()`, `vi.mock()`.
 
 ---
 
@@ -453,7 +464,7 @@ renderHook(() => useAuth(), {
 
 ## React Router Wrapping
 
-Components using `<Link>`, `useNavigate`, `useParams`, or `useLocation` must be wrapped:
+If the project uses React Router, components using `<Link>`, `useNavigate`, `useParams`, or `useLocation` must be wrapped:
 
 ```js
 // Simple
@@ -572,8 +583,8 @@ vi.useRealTimers(); // restore in afterEach
 
 ## Test File Conventions
 
-- Place tests next to source: `BlogCard.jsx` -> `BlogCard.test.jsx`
-- Use `.test.jsx` extension (not `.spec.jsx`)
+- Follow the project's existing placement and naming; the default is colocated, `BlogCard.jsx` -> `BlogCard.test.jsx` (`.test.tsx` in TypeScript projects)
+- Prefer the `.test` suffix over `.spec` unless the project already uses `.spec`
 - One `describe` per component/hook
 - Test names describe user-visible behavior: `"user fills form and sees success message"`
 - Use `vi.fn()` for all mock functions
@@ -596,7 +607,7 @@ vi.useRealTimers(); // restore in afterEach
 | Snapshot tests replacing behavior tests | Write explicit assertions |
 | `container.querySelector()` | Use RTL queries |
 | Shared mutable state between tests | Reset in `beforeEach` |
-| Importing from `jest` | Import from `vitest` (`vi.fn()`, `vi.mock()`) |
+| Importing from `jest` in a Vitest project | Import from `vitest` (`vi.fn()`, `vi.mock()`) |
 | Mocking what you're testing | Mock dependencies, not the subject |
 | `act()` wrapping RTL calls | RTL handles `act()` internally |
 | Mocking Axios/fetch directly | Use MSW for network-level mocking |

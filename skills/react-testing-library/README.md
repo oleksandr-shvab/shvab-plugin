@@ -41,5 +41,5 @@ These sources informed the rewrite:
 
 ### Tooling
 
-- [Vitest documentation](https://vitest.dev/) — Test runner used in this project, Vite-native.
+- [Vitest documentation](https://vitest.dev/) — Test runner the templates target, Vite-native.
 - [React Testing Library: Your Guide 2026 — ThinKSys](https://thinksys.com/qa-testing/react-testing-library-complete-guide-2023/) — Updated guide covering current RTL + Vitest patterns.

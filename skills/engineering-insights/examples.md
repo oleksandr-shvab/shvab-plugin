@@ -33,41 +33,44 @@ does, it isn't an entry.
 > Checkout-flow state always goes through Zustand (`cartStore.ts`) — three
 > components share the cart, so local state silently desyncs them.
 
-## Entries from this repo
+## Worked examples by kind
 
-Written after real sessions here. Reuse this shape.
+The three kinds of entry that pay for themselves most. These are
+*illustrative* — invented to show the level of detail. Your entries must name
+your own real files, functions, and observed behavior.
 
-✅ **A discovery that redirects the whole approach** — *server, What Works*
+✅ **A discovery that redirects the whole approach** — *What Works*
 
-> `reviewer-core` already computes cost end-to-end; the pipeline just dropped
-> it. `run-executor.ts` destructured `const { tokensIn, tokensOut, grounding }
-> = outcome;`, discarding `outcome.costUsd`. Commit `d45ab0d` removed only the
-> *persistence*, never the computation — so surfacing run cost is a wiring
-> job, never a provider/pricing job. Check what `ReviewOutcome` already
-> carries before touching the LLM path.
+> The billing service already computes proration; the invoice job just
+> discards it. `invoice-job.ts` destructures `const { lineItems, total } =
+> result;`, dropping `result.prorationCents`. A refactor removed only the
+> *rendering* of it, never the calculation — so showing proration on invoices
+> is a template wiring job, not a new calculation in `ProrationCalculator`.
+> Check what `BillingResult` already carries before touching the calculation
+> path.
 
-Why it works: names the file, the exact line, the commit, and ends with a
-rule that redirects a future session before it wastes an hour.
+Why it works: names the file, the exact line, and the history, and ends with
+a rule that redirects a future session before it wastes an hour.
 
-✅ **A trap that type-checking won't catch** — *server, Recurring Errors & Fixes*
+✅ **A trap that type-checking won't catch** — *Recurring Errors & Fixes*
 
-> Adding `cost_usd: z.number().nullable()` to `RunStats`/`RunSummary` makes the
-> *key required* — value may be null, presence may not. Every object literal
-> building those types stops compiling, including fixtures far from the change
-> (`server/test/contracts.test.ts`, client's `RunHistory.test.tsx`). Use
-> `.nullable()` where siblings are required-but-nullable; `.nullish()` on
-> `PrMeta`-style types where `score` and `opened_at` are already `.nullish()`.
+> Adding `deletedAt: z.date().nullable()` to the `Order` schema makes the
+> *key required* — the value may be null, the key may not. Every object
+> literal typed as `Order` stops compiling, including fixtures far from the
+> change (`test/fixtures/orders.ts`, `scripts/seed.ts`). Use `.nullable()`
+> where the key is always present; `.nullish()` where sibling fields are
+> already optional-and-nullable.
 
 Why it works: explains the *mechanism* (`nullable` ≠ optional key), lists
 where the breakage surfaces, and gives the decision rule for next time.
 
-✅ **A measurement that overturns the obvious choice** — *client, What Works*
+✅ **A measurement that overturns the obvious choice** — *What Works*
 
-> Real run costs here are $0.0004–$0.02 (measured against `agent_runs` on the
-> dev DB). Any fixed-decimal formatter renders nearly all of them as "$0.00" —
-> which is what the pre-`d45ab0d` helper did (`usd.toFixed(2)`). A magnitude
-> ladder capped at 4 decimals is no better: $0.00039347 → "$0.0004", one
-> significant digit. `formatCost` uses `toPrecision(3)` below a dollar.
+> Real job durations here are 0.4–9 s (measured against `job_runs` in
+> staging). A whole-seconds formatter — what `formatDuration` did with
+> `Math.round(ms / 1000)` — renders every sub-second job as "0 s" or "1 s",
+> so the fast majority is indistinguishable. Switch to milliseconds below 1 s
+> and `toPrecision(2)` seconds above.
 
 Why it works: carries the measured range, so a future session doesn't
 re-derive it — and names the specific wrong answer someone would reach for.

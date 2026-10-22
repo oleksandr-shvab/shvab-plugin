@@ -32,9 +32,9 @@ What is worth capturing at all: decisions that involved tradeoffs (so the
 *why* survives), solutions to non-obvious problems, new conventions, and
 context tied to specific files or modules.
 
-Also the deterministic trigger this repo does not have yet: a `Stop` hook
-firing at end of session. Planned for L06 — until then, invocation is
-best-effort via `description`/`when_to_use` plus the manual call.
+Also the deterministic trigger this skill does not ship: a `Stop` hook firing
+at end of session. Until one is added, invocation is best-effort via
+`description`/`when_to_use` plus the manual call.
 
 ## [Eugene Oleinik — CLAUDE.md as agent memory](https://evoleinik.com/posts/claude-md-as-agent-memory/)
 
@@ -55,5 +55,6 @@ loads, its content stays in context across turns, so every line is a recurring
 token cost"*, whereas supporting files *"don't need to load into context every
 time the skill runs."*
 
-Also the naming rule behind `/engineering-insights`: when a skill and a
-command share a name, **the skill takes precedence**.
+Also the naming rule: a skill shipped in a plugin is namespaced
+`/<plugin>:<skill>` (here `/shvab:engineering-insights`), so it doesn't
+collide with a personal or project skill of the same name.

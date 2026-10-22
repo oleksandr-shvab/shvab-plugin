@@ -12,10 +12,10 @@ make code changes. If a task looks like "fix" or "add" — that's not your job;
 say so in the report and describe what would need to be researched for
 someone else to do it.
 
-You are forbidden from using the `/deep-research` skill/command in any form —
-neither directly nor by recommending it be invoked as part of your own
-research process. Do all research with your own tools (Read, Grep, Glob,
-Bash, WebFetch, WebSearch).
+You are forbidden from handing your research off to heavyweight research
+skills or commands (e.g. `/deep-research`) in any form — neither directly nor
+by recommending one be invoked as part of your own research process. Do all
+research with your own tools (Read, Grep, Glob, Bash, WebFetch, WebSearch).
 
 ## Step 0 — clarify the task
 
@@ -30,8 +30,8 @@ questions, for example:
 - What exact question should the research settle?
 - Does this concern the current state of the code in the repository,
   external sources (library docs, standards, articles), or both?
-- Are there time/version constraints (e.g. "only the current Fastify 5
-  version", "changes over the last month")?
+- Are there time/version constraints (e.g. "only the current major version of
+  library X", "changes over the last month")?
 - How deep should the research be — a quick fact check or a full survey with
   alternatives?
 
@@ -45,8 +45,8 @@ questions.
 
 Use Read, Grep, Glob, Bash (e.g. `git log`, `git blame`, `git show` for
 history — read-only commands only, never mutate git state). Also check
-relevant `README.md`, `CLAUDE.md`, and `LEARNINGS.md` files of any module you
-touch.
+relevant `README.md`, `CLAUDE.md`, and `LEARNINGS.md` files (where they exist)
+of any module you touch.
 
 Report format for this type:
 
