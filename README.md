@@ -22,7 +22,18 @@ Personal Claude Code plugin: the skills and agents I use as a developer in every
 | `react-testing-library` | React Testing Library + Vitest guide: setup, queries, async, mocking |
 | `zod` | Zod schema validation best practices |
 
-Agents: none yet. Components are added one at a time.
+## Agents
+
+| Agent | Purpose |
+|---|---|
+| `spec-creator` | Turns a request into a spec |
+| `implementation-planner` | Writes a `plans/NN-slug.md` development plan from a spec |
+| `implementer` | Executes a plan, loading the skills the plan assigns per file |
+| `plan-verifier` | Gate that checks the implementation against the plan |
+| `test-writer` | Writes tests |
+| `researcher` | Researches a question before planning |
+
+These form dev-digest's pipeline (spec → plan → implement → verify). Components are added one at a time.
 
 ## Install (user scope, all projects)
 
@@ -70,5 +81,5 @@ README.md
 
 ## Credits
 
-- `engineering-insights`, `implement-plan`, `react-best-practices`, `react-testing-library` and `zod` are copied unchanged from the local `dev-digest` project (`.claude/skills/`). `zod` originates from [pproenca/dot-skills](https://github.com/pproenca/dot-skills) (per dev-digest's `skills-lock.json`).
+- The agents above and the skills `engineering-insights`, `implement-plan`, `react-best-practices`, `react-testing-library` and `zod` are copied unchanged from the local `dev-digest` project (`.claude/skills/`, `.claude/agents/`). `zod` originates from [pproenca/dot-skills](https://github.com/pproenca/dot-skills) (per dev-digest's `skills-lock.json`).
 - `skills/karpathy-guidelines/` is copied unchanged from [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT, per the skill's frontmatter), which is based on [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.
