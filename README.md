@@ -23,6 +23,8 @@ Personal Claude Code plugin: the skills and agents I use as a developer in every
 | `zod` | Zod schema validation best practices |
 | `be-review` | Manual Django PR review of the current branch (`/shvab:be-review`): dispatches `flows-review`, then checks house rules — thin views/thick models, QuerySet methods, no direct `save()`, N+1, tests per endpoint |
 | `bp` | Manual deep best-practices research on a programming topic (`/shvab:bp <topic>`) |
+| `i-have-adhd` | Manual output-shaping mode (`/shvab:i-have-adhd`, off with "stop adhd mode"): lead with the next action, numbered steps, one next action, no preamble/recap/closers |
+| `no-ai-slop` | Edit a draft into sharper, more human writing while keeping your voice, or detect AI-slop patterns without rewriting (`/shvab:no-ai-slop <draft>`) |
 
 ## Agents
 
@@ -105,4 +107,6 @@ README.md
 - `react-testing-library` and `zod` come from `dev-digest` too. `react-testing-library` got a short "Adapt to the Project First" section plus TypeScript/Jest/router notes; `zod` is unchanged and originates from [pproenca/dot-skills](https://github.com/pproenca/dot-skills) (per dev-digest's `skills-lock.json`).
 - `react-best-practices` started as a copy from `dev-digest`, had its project-specific lines (data layer, styling, HTTP client, bundling) generalized, and was extended with rules distilled from personal notes on Josh Comeau's *The Joy of React* course (component API design, state immutability and ownership, forms, hooks gotchas, SSR/Next.js, Motion). The doubtful or version-sensitive claims (Next.js `ssr: false` and segment config, Motion layout and reduced-motion APIs, React 19 context, `defaultProps` and `autoFocus`) were checked against the current docs; the rest comes from the notes.
 - `be-review`, `bp` and the `flows-review` agent are copied from the `osh` plugin (v0.1.3, by Oleksandr Shuryhin; marketplace `digital-brother/osh-claude-plugins`). The two commands became skills (same `/shvab:` invocation) and the text is otherwise verbatim — the only edit is `be-review`'s agent dispatch, which names `shvab:flows-review`. The installed copy has no license file and the source repo isn't visible to this machine's `gh` login (likely private), so keep this repo private, or ask the author, before publishing it.
+- `skills/i-have-adhd/` is copied unchanged from [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) (MIT, commit `1ecea19`; license text kept next to the skill). Only the skill is taken: the upstream repo's optional always-on `SessionStart` hook is not included, so nothing runs at session start.
+- `skills/no-ai-slop/` (with its `eval.md`) is copied unchanged from [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) (MIT, commit `000650b`; license text kept next to the skill).
 - `skills/karpathy-guidelines/` is copied unchanged from [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT, per the skill's frontmatter), which is based on [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.
